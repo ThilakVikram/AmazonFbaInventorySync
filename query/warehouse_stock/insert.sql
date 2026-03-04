@@ -1,0 +1,21 @@
+desc warehousestock;
+
+insert into warehousestock(
+updated_date,
+asin,
+sku,
+fnsku,
+item_name,
+quantity,
+inbound_quantity,
+outbound_quantity,
+reviewing_quantity,
+damaged_quantity,
+overall_quantity,
+warehouse,
+warehouse_id,
+unstructured_name
+)
+values(
+%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s
+)
