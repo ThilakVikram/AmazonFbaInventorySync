@@ -1,5 +1,3 @@
-desc warehousestock;
-
 insert into warehousestock(
 updated_date,
 asin,

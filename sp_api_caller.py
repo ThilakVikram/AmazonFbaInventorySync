@@ -10,12 +10,13 @@ class SP_API_Caller(SPAPI_Container):
     def __init__(self):
         pass
     def setRegionMarketplace(self,region:Region,marketplace:Union[NA_Marketplace,EU_Marketplace,FE_Marketplace]):
-        self.marketplaceID = self.marketplace_id_map.get(region).get(marketplace)
-        self.region = region
-        self.marketplace = marketplace
+        print(self.marketplace_id_map)
+        self.marketplaceID = self.marketplace_id_map.get("region").get(region.value).get(marketplace.value)
+        self.region = region.value
+        self.marketplace = marketplace.value
         pass
     def generateAccessToken(self):
-        if None not in {self.region,self.marketplace,self.marketplaceID}:
+        if None in {self.region,self.marketplace,self.marketplaceID}:
             raise Exception("Set Region and Marketplace Using setRegionMarketplace before using generate or get function")
         url = f"https://api.amazon.com/auth/o2/token?grant_type=refresh_token&refresh_token={self.refresh_token_map.get(self.region)}&client_id={self.client_id}&client_secret={self.client_secret}"
         headers = {
@@ -45,7 +46,7 @@ class SP_API_Caller(SPAPI_Container):
         pass
     def GetInventorySummary(self):
         url = f"https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/summaries?details=false&granularityType=Marketplace&granularityId={self.marketplaceID}&marketplaceIds={self.marketplaceID}"
-        headers = self.AuthHeader(self.AuthHeader)
+        headers = self.AuthHeader(self.access_token)
         response = requests.get(url,headers=headers)
         match response.status_code:
             case 200:

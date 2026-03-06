@@ -17,7 +17,8 @@ class Database:
             cursor = conn.cursor()
             cursor.executemany(sqlquery,values)
             conn.commit()
+            print("Inserted Success")
             return "success"
         except Exception as err:
-            raise "error"
+            raise Exception(err)
         pass
