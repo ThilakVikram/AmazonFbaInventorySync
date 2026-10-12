@@ -1,10 +1,10 @@
 import time
-from Tablequery import TableQuery
-from Database import Database
+from .Tablequery import TableQuery
+from .Database import Database
 import pandas as pd
 import datetime
 from typing import Union
-from SPAPI_Container import SPAPI_Container,Region,NA_Marketplace,EU_Marketplace,FE_Marketplace
+from .SPAPI_Container import SPAPI_Container,Region,NA_Marketplace,EU_Marketplace,FE_Marketplace
 import requests
 
 
@@ -21,7 +21,7 @@ class SPAPI_Caller(SPAPI_Container):
                 "Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"
         }}
         response = requests.post(**config)
-        print("Requested for Access Token")
+        # print("Requested for Access Token")
         return response.json().get("access_token")
         pass
     def getInventorySummary(self,marketplace:Union[NA_Marketplace,EU_Marketplace,FE_Marketplace],nextToken = None):
@@ -30,14 +30,14 @@ class SPAPI_Caller(SPAPI_Container):
         while nextToken != "":
             if self.access_token != None:
                 url = f"https://sellingpartnerapi-{self.region}.amazon.com/fba/inventory/v1/summaries?details=true&granularityType=Marketplace&granularityId={self.marketplaceID}&marketplaceIds={self.marketplaceID}&nextToken={nextToken if nextToken else ""}"+""
-                print("url : "+url+" nextToken : "+nextToken if nextToken else "")
+                # print("url : "+url+" nextToken : "+nextToken if nextToken else "")
                 headers = {
                     "x-amz-access-token":self.access_token
                 }
                 try:
                     response = requests.get(url,headers=headers,timeout=10)
                     data = response.json()
-                    print(response.status_code)
+                    # print(response.status_code)
                     # print(data)
                     match response.status_code:
                         case 200:
@@ -47,7 +47,7 @@ class SPAPI_Caller(SPAPI_Container):
                                 pass
                             except Exception as e:
                                 nextToken = ""
-                                print("No More Pagination")
+                                # print("No More Pagination")
                             yield data.get("payload").get("inventorySummaries")
                         case 403:
                             self.generateAccessToken()
@@ -66,14 +66,14 @@ class SPAPI_Caller(SPAPI_Container):
             else:
                 self.generateAccessToken()
                 self.getInventorySummary(marketplace,nextToken)
-        print("Execution Completed")
+        # print("Execution Completed")
         
     
     
 def Values_Getter(region=Region.NA,marketplace=NA_Marketplace.US):
-    print("Value Getter Received")
-    print(region)
-    print(marketplace)
+    # print("Value Getter Received")
+    # print(region)
+    # print(marketplace)
     caller = SPAPI_Caller(region)
     for data in caller.getInventorySummary(marketplace):
         values = list()

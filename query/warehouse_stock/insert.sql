@@ -1,4 +1,4 @@
-insert into warehousestock(
+insert into WarehouseStock(
 updated_date,
 asin,
 sku,

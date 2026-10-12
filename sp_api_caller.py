@@ -1,6 +1,6 @@
 import requests
 import time
-from SPAPI_Container import SPAPI_Container,Region,NA_Marketplace,EU_Marketplace,FE_Marketplace
+from .SPAPI_Container import SPAPI_Container,Region,NA_Marketplace,EU_Marketplace,FE_Marketplace
 from typing import Union
 class SP_API_Caller(SPAPI_Container):
     marketplaceID = None
@@ -10,7 +10,7 @@ class SP_API_Caller(SPAPI_Container):
     def __init__(self):
         pass
     def setRegionMarketplace(self,region:Region,marketplace:Union[NA_Marketplace,EU_Marketplace,FE_Marketplace]):
-        print(self.marketplace_id_map)
+        # print(self.marketplace_id_map)
         self.marketplaceID = self.marketplace_id_map.get("region").get(region.value).get(marketplace.value)
         self.region = region.value
         self.marketplace = marketplace.value
