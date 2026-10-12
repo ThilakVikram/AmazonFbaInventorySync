@@ -1,2 +1,12 @@
-pandas
-mysql-connector-python
+certifi==2026.1.4
+charset-normalizer==3.4.4
+dotenv==0.9.9
+idna==3.11
+mysql-connector-python==9.6.0
+numpy==2.4.2
+pandas==3.0.1
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.1
+requests==2.32.5
+six==1.17.0
+urllib3==2.6.3
